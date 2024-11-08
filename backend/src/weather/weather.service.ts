@@ -10,7 +10,6 @@ export class WeatherService {
   constructor(
     private readonly cityService: CityService,
     private readonly weatherFetcherService: WeatherFetcherService,
-    @Inject(forwardRef(() => WeatherGateway))
     private readonly weatherGateway: WeatherGateway,
   ) {}
 
