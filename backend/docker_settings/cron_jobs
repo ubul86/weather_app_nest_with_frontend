@@ -1,0 +1,1 @@
+* * * * * root cd /www/local && npm run fetch:weather >> /var/log/cron.log 2>&1

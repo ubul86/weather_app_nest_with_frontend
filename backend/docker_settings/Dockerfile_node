@@ -1,0 +1,14 @@
+FROM node:20
+
+RUN apt-get update && apt-get install -y cron
+
+WORKDIR /www/local
+
+COPY docker_settings/cron_jobs /etc/cron.d/cron_jobs
+
+RUN chmod 0644 /etc/cron.d/cron_jobs && \
+    crontab /etc/cron.d/cron_jobs && \
+    touch /var/log/cron.log
+
+
+CMD cron && tail -f /var/log/cron.log

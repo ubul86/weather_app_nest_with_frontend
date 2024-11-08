@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker_settings/Dockerfile_node
+    container_name: weather_nest_node
+    volumes:
+      - './:/www/local'
+    restart: always
+    ports:
+      - "${NODE_PORT_HOST}:${NODE_PORT_CONTAINER}"
+    working_dir: /www/local
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:6.0
+    container_name: weather_nest_mongodb
+    restart: always
+    ports:
+      - "${MONGODB_PORT_HOST}:${MONGODB_PORT_CONTAINER}"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ./docker_settings/mongodb_data:/data/db
+    networks:
+      - app-network
+
+  redis:
+    image: redis:6.2
+    container_name: weather_nest_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  mongo-express:
+    image: mongo-express
+    container_name: weather_nest_mongo_express
+    restart: always
+    ports:
+      - "${MONGO_EXPRESS_PORT_HOST}:${MONGO_EXPRESS_PORT_CONTAINER}"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: ${MONGO_URI}
+      ME_CONFIG_MONGODB_PORT: ${MONGODB_PORT_HOST}
+      ME_CONFIG_BASICAUTH: true
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODB_INITDB_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGODB_INITDB_PASSWORD}
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
