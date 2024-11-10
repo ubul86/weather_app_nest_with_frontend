@@ -13,7 +13,7 @@ export class SeederService {
     const cities = await this.cityModel.create([
       { name: 'Budapest', latitude: 47.4979, longitude: 19.0402 },
       { name: 'Debrecen', latitude: 47.5316, longitude: 21.6273 },
-      { name: 'Hódmezővásárhely', latitude: 47.5316, longitude: 21.6273 },
+      { name: 'Hódmezővásárhely', latitude: 46.4311422, longitude: 20.3410358 },
       { name: 'Szeged', latitude: 47.5316, longitude: 21.6273 },
     ]);
 
