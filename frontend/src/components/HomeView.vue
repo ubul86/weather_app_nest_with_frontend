@@ -28,18 +28,22 @@
         </div>
       </v-card-text>
     </v-card>
-
+    <WeatherChart />
   </div>
 
 </template>
 
 <script setup>
+
+import socket from '../bootstrap.js';
+
 import { computed, onMounted, watch } from 'vue';
-import MapComponent from './MapComponent.vue';
 import { useCityStore } from '../stores/city.store.js';
 import { useWeatherStore } from '../stores/weather.store.js';
-import socket from '../bootstrap.js';
 import { VCard, VCardText, VImg } from 'vuetify/components';
+
+import MapComponent from './MapComponent.vue';
+import WeatherChart from "./WeatherChart.vue";
 
 const cityStore = useCityStore();
 const weatherStore = useWeatherStore();

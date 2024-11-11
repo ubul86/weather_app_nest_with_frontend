@@ -5,10 +5,7 @@
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
       ></LTileLayer>
-
-      <LMarker :lat-lng="center">
-
-      </LMarker>
+      <LMarker :lat-lng="center"></LMarker>
     </LMap>
   </div>
 </template>
@@ -16,9 +13,10 @@
 <script setup>
 import { computed } from 'vue';
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet';
+import * as L from 'leaflet';
+
 import 'leaflet/dist/leaflet.css';
 
-// Props
 const props = defineProps({
   latitude: {
     type: Number,
