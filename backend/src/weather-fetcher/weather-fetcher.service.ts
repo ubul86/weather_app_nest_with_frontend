@@ -12,11 +12,13 @@ export class WeatherFetcherService {
   async fetchWeatherData(city: City): Promise<any> {
     console.log(city.name);
     const response = await firstValueFrom(
-      this.httpService.get('http://api.weatherapi.com/v1/current.json', {
+      this.httpService.get('http://api.weatherapi.com/v1/forecast.json', {
         params: {
           key: process.env.WEATHER_API_KEY,
           q: city.name.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
           aqi: 'no',
+          days: 1,
+          alerts: 'no'
         },
       }),
     );
